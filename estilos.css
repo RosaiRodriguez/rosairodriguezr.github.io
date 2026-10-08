@@ -680,3 +680,9 @@ body { transition: background .5s ease, color .5s ease; }
 .demo { padding-bottom: 38px; }
 .demo-pie { bottom: 10px; right: 16px; }
 :root .cursos-l .estado.vivo, :root[data-tema="oscuro"] .cursos-l .estado.vivo { background: #E9B9C4; color: #7A2338; }
+
+/* Línea de tiempo: punto y línea comparten el mismo centro exacto */
+.linea-t { --x: 13px; padding-left: 40px; }
+.linea-t .eje { left: calc(var(--x) - 1px); width: 2px; }
+.linea-t .hito::before { left: calc(var(--x) - 40px - 1px); transform: translateX(-50%); width: 16px; height: 16px; margin: 0; }
+.linea-t .hito.est::before { transform: translateX(-50%) rotate(45deg); border-radius: 3px; width: 14px; height: 14px; top: 29px; }
