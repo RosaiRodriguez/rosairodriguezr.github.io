@@ -11,9 +11,9 @@
     m1: 'About', m2: 'Projects', m3: 'Experience', m4: 'CV', m5: 'Contact', bcv: 'Download CV',
     i0: 'Home', i1: 'About', i2: 'Projects', i3: 'How I work', i4: 'Experience', i5: 'CV', i6: 'Contact',
     gira1: 'I organise', gira2: 'so the team knows what to do first.', vp: 'See projects', dcv: 'Download CV',
-    nota1: 'Granada, Spain', nota2: 'Excel, Power BI and n8n',
+    nota1: 'Granada, Spain', nota2: 'Excel, Power BI and n8n', nota3: 'Learning Python and SQL', abrir_menu: '',
     's-et': 'About me',
-    's-rev': 'Before opening a spreadsheet I ask what decision those numbers need to support. I worked in the office of a sewing school and handling orders, payments and sales reports for a shop. Both places had the same problem, information scattered across chats and loose sheets, and people losing their mornings looking for it. That is where my projects come from.',
+    's-rev': 'Before opening a spreadsheet I ask what decision those numbers need to support. I worked in administration at a sewing school and then at a shop, handling orders, payments and sales reports. Both places had the same problem, information scattered across chats and loose sheets, and people losing their mornings looking for it. That is where my projects come from.',
     d1: 'complete projects, each with a report and files', d2: 'nodes in my largest automation', d3: 'rows of official data cleaned and checked', d4: 'to answer an enquiry, at any time of day',
     'p-et': 'Projects', 'p-tit': 'Real business problems, solved with tools a small company already has.',
     'p-av': 'Four use sample data and one uses public data from Spain’s statistics office. None of them is in use at the businesses shown.',
@@ -31,7 +31,7 @@
     'coy-tt': 'Which order to move first',
     'coy-tx': 'Orders at a computer shop came in over the counter, WhatsApp, phone and Instagram, and nobody saw the full picture. I cleaned the log with Power Query and built an Excel tracker that shows in one minute what is late, why, and how much money is waiting.',
     lu: 'Mo', ma: 'Tu', mi: 'We', ju: 'Th', vi: 'Fr', 'nr-ch': '2 timetable clashes', 'nr-a': 'Attendance',
-    'nr-t': 'Letting the office know in a minute who needs a call',
+    'nr-t': 'Letting the school know in a minute who to call',
     'nr-tx': 'In a small school every drop-out is a fee that stops coming in. I brought groups, enrolments and attendance into one Excel file that flags who is missing classes, which places are still free and which timetable changes clash.',
     'nat-g': 'Births in Granada', 'nat-p': 'Andalusia', 'nat-4': 'Granada, 4th',
     'nat-t': '23% fewer babies are born in Granada than in 2016',
@@ -41,12 +41,12 @@
     me2: 'Organise', me2t: 'I bring scattered information together, remove duplicates and keep one version of the data.',
     me3: 'Automate', me3t: 'What repeats every day is done by a machine, so the team can talk to people.',
     me4: 'Measure', me4t: 'A dashboard that shows whether it worked, in numbers anyone understands.',
-    'tr-et': 'Experience', 'tr-t': 'From the front office to data',
+    'tr-et': 'Experience', 'tr-t': 'From administration to data',
     h1f: 'Sep 2024 – Sep 2026', h1t: 'Sales and administration', h1l: 'Coyote Store, Santa Marta, remote since 2025',
     h1x: 'End-to-end orders, repairs and special requests, outstanding payments, supplier issues, cash reconciliation and sales reports.',
     h2t: 'Master’s in Business Process Management and Technologies', h2l: 'University of Granada',
     h3f: 'Jan 2022 – Jul 2024', h3t: 'Administrative assistant', h3l: 'NR Pattern Making and Sewing School, Santa Marta',
-    h3x: 'Timetables, groups and activities, office records in Excel and improvements to the curriculum.',
+    h3x: 'Timetables, groups and activities, administrative records in Excel and improvements to the curriculum.',
     h4t: 'Degree in Business Administration', h4l: 'Universidad del Magdalena, Colombia',
     'cu-t': 'Udemy courses', encurso: 'In progress', hecho: 'Done',
     cu3: 'Operations Management, Process Analysis', cu4: 'Management Accounting, Activity-Based Costing',
@@ -55,14 +55,14 @@
     m6: 'Tools', i7: 'Tools',
     bio1: 'I have a degree in Business Administration from Universidad del Magdalena in Colombia and a Master\u2019s in Business Process Management and Technologies from the University of Granada, the city where I live.',
     bio2: 'I have never stopped studying because I like to understand how things work on the inside. Right now I am learning Python and SQL, to go further with the data I already know how to organise in Excel and Power BI.',
-    bio3: 'I am looking for an administration, operations or sales support team where I can bring order, energy and a fresh look at how things get done.',
-    bio4: 'The ロサ stamp next to my photo is my name written in Japanese. It is a nod to a culture I find fascinating and that values work done well.',
+    bio3: 'I am looking for an administration, operations or sales support team where I can bring order and suggest improvements from day one.',
+    bio4: 'The ロサ stamp next to my photo is my name written in Japanese. I am very interested in Japanese culture, especially the care it puts into details.',
     'ra-t': 'How I work with others', 'ra-s': '(hover or tap a card)',
     r1: 'Teamwork', r1b: 'I grew up with three sisters. Sharing tasks, giving way and reaching agreements came long before any job.',
     r2: 'I like a challenge', r2b: 'In my latest project I built a Telegram bot from scratch and connected it to AI and Power BI. If I don\u2019t know how to do something, I learn it.',
     r3: 'Always learning', r3b: 'Degree in 2024, master\u2019s in 2026 and now Python and SQL. Whatever I learn, I try straight away in a project.',
     r4: 'Warm and approachable', r4b: 'I am cheerful and spontaneous, which shows when looking after a customer or working with other people.',
-    'he-et': 'Tools', 'he-t': 'My toolbox', 'he-s': 'Pick one and I will show you what it is for, how I use it and which project shows it.',
+    'he-et': 'Tools', 'he-t': 'My toolbox', 'he-s': 'Tap a tool to see how I use it and which project it appears in.',
     co1: 'Got a process', co2: 'that could work better?', 'co-p': 'Write to me and I’ll tell you how I would approach it.',
     'co-b1': 'Copy my email', 'co-b2': 'Email me', guino: 'Thanks for scrolling all the way down.'
   };
@@ -84,6 +84,7 @@
     idioma = l; raiz.lang = l;
     $$('[data-i18n]').forEach(el => { const k = el.dataset.i18n; const v = l === 'en' ? EN[k] : ES[k]; if (v !== undefined) el.innerHTML = v; });
     $('#idioma').setAttribute('aria-label', l === 'en' ? 'Cambiar idioma a español' : 'Change language to English');
+    $('#menu-btn').setAttribute('aria-label', l === 'en' ? 'Open menu' : 'Abrir menú');
     saludo(); partirRevela(); iPal = 0; letra = 0; borrando = false;
     if ($('#guino').classList.contains('visto')) $('#guino').textContent = TXT[l].guino;
     try { localStorage.setItem('idioma', l); } catch (e) {}
@@ -98,7 +99,6 @@
     svg.querySelectorAll('path').forEach((p, i) => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.style.setProperty('--i', i); });
   }
   ['#firma-intro', '#firma-pie'].forEach(s => prepararFirma($(s)));
-  const logo = $('.firma-logo'); { const b = logo.getBBox(); logo.setAttribute('viewBox', `${b.x - 10} ${b.y - 10} ${b.width + 20} ${b.height + 20}`); }
   $$('#firma-pie path').forEach(p => { p.style.strokeDashoffset = 0; p.style.fill = 'currentColor'; p.style.strokeWidth = 0; });
 
   /* ---------- Entrada con firma ---------- */
@@ -181,15 +181,14 @@
   function alBajar() {
     const y = scrollY, H = document.documentElement.scrollHeight - innerHeight;
     $('#progreso').style.height = (y / H * 100) + '%';
-    indice.classList.toggle('visible', y > innerHeight * .5);
+    indice.classList.toggle('visible', $('#sobre-mi').getBoundingClientRect().top < innerHeight * .35);
     let act = 0; secciones.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * .45) act = i; });
     enlacesI.forEach((a, i) => a.classList.toggle('actual', i === act));
     const a = enlacesI[act]; caja.style.transform = `translateY(${a.offsetTop}px)`; caja.style.width = a.offsetWidth + 'px';
     const pr = $('#proyectos').getBoundingClientRect(); const mitad = innerHeight / 2;
     indice.classList.toggle('sobre-oscuro', pr.top < mitad && pr.bottom > mitad);
-    $('#cursor').classList.toggle('oscuro', pr.top < my && pr.bottom > my);
     menu.forEach(m => m.classList.toggle('actual', secciones[act] && m.getAttribute('href') === '#' + secciones[act].id));
-    $('#barra').classList.toggle('escondida', y > ultimoY && y > 300); ultimoY = y;
+    $('#barra').classList.toggle('escondida', y > ultimoY && y > 300 && !document.body.classList.contains('menu-abierto')); ultimoY = y;
     // texto que se ilumina
     const r = rev.getBoundingClientRect(); const k = Math.min(1, Math.max(0, (innerHeight * .85 - r.top) / (r.height + innerHeight * .35)));
     const ps = rev.querySelectorAll('.pal'); const n = Math.floor(k * ps.length); ps.forEach((p, i) => p.classList.toggle('on', i < n));
@@ -207,34 +206,29 @@
   addEventListener('scroll', () => requestAnimationFrame(alBajar), { passive: true });
   addEventListener('resize', alBajar);
 
-  /* ---------- Cursor, inclinación, imanes, formas ---------- */
-  const cur = $('#cursor'), etq = cur.querySelector('.etq');
-  let mx = -200, my = -200, cx = -200, cy = -200;
+  /* ---------- Inclinación suave y fondo con profundidad (el cursor no se toca) ---------- */
   if (raton && !quieto) {
-    document.body.classList.add('cursor-propio');
-    addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
-    document.addEventListener('pointerover', e => {
-      const t = e.target.closest('[data-cursor]');
-      const enl = e.target.closest('a, button');
-      if (t) { const k = t.dataset.cursor; etq.textContent = TXT[idioma][k.toLowerCase()] || k; }
-      cur.classList.toggle('grande', !!t); cur.classList.toggle('enlace', !t && !!enl);
-    });
-    (function bucle() { cx += (mx - cx) * .2; cy += (my - cy) * .2; cur.style.transform = `translate(${cx}px, ${cy}px)`; requestAnimationFrame(bucle); })();
-
     $$('.inclina').forEach(el => {
-      el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; el.style.transform = `perspective(900px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg)`; });
+      el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; el.style.transform = `perspective(900px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`; });
       el.addEventListener('pointerleave', () => el.style.transform = '');
     });
-    $$('.magnetico').forEach(b => {
-      b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .25}px, ${(e.clientY - r.top - r.height / 2) * .35}px)`; });
-      b.addEventListener('pointerleave', () => b.style.transform = '');
-    });
-    const ret = $('#retrato');
-    ret.addEventListener('pointermove', e => { const r = ret.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; ret.style.transform = `perspective(800px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`; });
-    ret.addEventListener('pointerleave', () => ret.style.transform = '');
-    const formas = $$('.f');
-    addEventListener('pointermove', e => { const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5; formas.forEach((f, i) => f.style.transform = `translate(${x * (i + 1) * 18}px, ${y * (i + 1) * 18}px)`); });
+    const capas = $$('.decor .capa');
+    let px = 0, py = 0;
+    addEventListener('pointermove', e => { px = e.clientX / innerWidth - .5; py = e.clientY / innerHeight - .5; mover(); }, { passive: true });
+    function mover() { const y = Math.min(scrollY, innerHeight); capas.forEach(c => { const k = +c.dataset.p; c.style.transform = `translate(${px * k}px, ${py * k - y * k / 120}px)`; }); }
+    addEventListener('scroll', mover, { passive: true });
   }
+
+  /* ---------- Menú del móvil ---------- */
+  const mb = $('#menu-btn'), mm = $('#menu-movil');
+  function cerrarMenu() { mb.setAttribute('aria-expanded', 'false'); mm.classList.remove('abierto'); document.body.classList.remove('menu-abierto'); setTimeout(() => { if (!mm.classList.contains('abierto')) mm.hidden = true; }, 300); }
+  mb.addEventListener('click', () => {
+    if (mm.classList.contains('abierto')) return cerrarMenu();
+    mm.hidden = false; requestAnimationFrame(() => mm.classList.add('abierto'));
+    mb.setAttribute('aria-expanded', 'true'); document.body.classList.add('menu-abierto');
+  });
+  mm.querySelectorAll('a').forEach(a => a.addEventListener('click', cerrarMenu));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && mm.classList.contains('abierto')) cerrarMenu(); });
 
   /* ---------- Modo claro y oscuro ---------- */
   const btnTema = $('#tema');
