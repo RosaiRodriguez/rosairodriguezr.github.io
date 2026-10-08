@@ -1,0 +1,109 @@
+// ============================================================
+// Escuela de Patronaje y Confección NR · Inscripciones
+// Consultas de Power Query (lenguaje M)
+//
+// Origen: NR_inscripciones_formulario.xlsx, la exportación del formulario de inscripción.
+// Cómo usarlas en Excel:
+//   Datos > Obtener datos > De otras fuentes > Consulta en blanco > Editor avanzado
+//   Crear una consulta por bloque con el nombre que aparece en su cabecera.
+//   Después de crear RutaFormulario, cambiar la ruta por la del archivo en tu equipo.
+//
+// Resultado: Inscripciones_limpias (una fila por persona y grupo), Alumnos y Matriculas.
+// El estado de la matrícula, la documentación y las bajas no vienen del formulario:
+// los completa secretaría en la hoja Matrículas del archivo de gestión.
+// ============================================================
+
+
+// ---------- RutaFormulario (parámetro) ----------
+"C:\NR\NR_inscripciones_formulario.xlsx" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+
+
+// ---------- Inscripciones_limpias ----------
+let
+    Origen = Excel.Workbook(File.Contents(RutaFormulario), null, true),
+    Hoja = Origen{[Item = "Respuestas de formulario 1", Kind = "Sheet"]}[Data],
+    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars = true]),
+    Renombrar = Table.RenameColumns(Encabezados, {
+        {"Marca temporal", "marca"}, {"Nombre completo", "nombre"}, {"Barrio", "barrio"},
+        {"¿Qué curso quieres hacer?", "curso_texto"}, {"Horario (solo técnico laboral)", "horario_texto"},
+        {"¿Cómo nos conociste?", "canal_texto"}, {"¿Quieres financiar el curso?", "financiar_texto"}}),
+
+    // fuera filas vacías y envíos de prueba
+    SinVacias = Table.SelectRows(Renombrar, each [nombre] <> null and Text.Trim(Text.From([nombre])) <> ""),
+    SinPruebas = Table.SelectRows(SinVacias, each not List.Contains({"prueba", "test"}, Text.Lower(Text.Trim([nombre])))),
+
+    // nombre: sin espacios dobles; si está todo en minúscula o todo en mayúscula, se pone bien
+    Nombre = Table.TransformColumns(SinPruebas, {{"nombre", each
+        let
+            limpio = Text.Combine(List.Select(Text.Split(Text.Trim(_), " "), each _ <> ""), " "),
+            arreglado = if limpio = Text.Lower(limpio) or limpio = Text.Upper(limpio)
+                        then Text.Replace(Text.Proper(limpio), " De La ", " De la ")
+                        else limpio
+        in arreglado, type text}}),
+
+    // curso y horario escritos libremente -> código de curso y grupo
+    Curso = Table.AddColumn(Nombre, "curso", each
+        let t = Text.Lower(Text.Trim(Text.From([curso_texto]))) in
+            if Text.Contains(t, "técnico") or Text.Contains(t, "tecnico") then "TLPC"
+            else if Text.Contains(t, "baño") or Text.Contains(t, "bano") then "BTB"
+            else if Text.Contains(t, "lencer") then "BLF"
+            else if Text.Contains(t, "vacacional") then "VAC"
+            else null, type text),
+    Horario = Table.AddColumn(Curso, "horario", each
+        let t = if [horario_texto] = null then "" else Text.Lower(Text.Trim(Text.From([horario_texto]))) in
+            if [curso] <> "TLPC" then null
+            else if List.Contains({"mañana", "manana", "am"}, t) then "Mañana"
+            else if List.Contains({"tarde", "pm"}, t) then "Tarde"
+            else null, type text),
+    Grupo = Table.AddColumn(Horario, "id_grupo", each
+        if [curso] = "BTB" then "TB-01"
+        else if [curso] = "BLF" then "LE-01"
+        else if [curso] = "VAC" then "VA-01"
+        else if [curso] = "TLPC" and [horario] = "Mañana" then "TL-M"
+        else if [curso] = "TLPC" then "TL-T"
+        else "Revisar", type text),
+
+    // respuestas libres de "¿cómo nos conociste?" agrupadas en canales
+    Canal = Table.AddColumn(Grupo, "canal", each
+        let t = if [canal_texto] = null then "" else Text.Lower(Text.Trim(Text.From([canal_texto]))) in
+            if Text.Contains(t, "insta") or t = "ig" then "Instagram"
+            else if Text.Contains(t, "whats") then "WhatsApp"
+            else if List.AnyTrue(List.Transform({"amig", "recomend", "referid", "conocid"}, (p) => Text.Contains(t, p))) then "Referido"
+            else if Text.Contains(t, "pas") or Text.Contains(t, "presencial") then "Presencial"
+            else if Text.Contains(t, "face") then "Facebook"
+            else "Sin dato", type text),
+    Financia = Table.AddColumn(Canal, "financiado", each
+        if [financiar_texto] <> null and List.Contains({"sí", "si"}, Text.Lower(Text.Trim(Text.From([financiar_texto])))) then "Sí" else "No", type text),
+
+    // la misma persona en el mismo grupo dos veces: se queda el primer envío
+    Ordenar = Table.Buffer(Table.Sort(Financia, {{"marca", Order.Ascending}})),
+    SinDuplicados = Table.Distinct(Ordenar, {"nombre", "id_grupo"}),
+    Tipos = Table.TransformColumnTypes(SinDuplicados, {{"marca", type datetime}}),
+    Columnas = Table.SelectColumns(Tipos, {"marca", "nombre", "barrio", "id_grupo", "canal", "financiado"})
+in
+    Columnas
+
+
+// ---------- Alumnos ----------
+// Una fila por persona, numerada en el orden en que se inscribió por primera vez (A-231, A-232...).
+let
+    Origen = Inscripciones_limpias,
+    Ordenar = Table.Buffer(Table.Sort(Origen, {{"marca", Order.Ascending}})),
+    Primera = Table.Distinct(Ordenar, {"nombre"}),
+    Indice = Table.AddIndexColumn(Primera, "n", 231, 1, Int64.Type),
+    Id = Table.AddColumn(Indice, "id_alumno", each "A-" & Text.From([n]), type text),
+    Columnas = Table.SelectColumns(Id, {"id_alumno", "nombre", "barrio", "canal"})
+in
+    Columnas
+
+
+// ---------- Matriculas ----------
+let
+    Origen = Inscripciones_limpias,
+    ConId = Table.NestedJoin(Origen, {"nombre"}, Alumnos, {"nombre"}, "al", JoinKind.LeftOuter),
+    Expandir = Table.ExpandTableColumn(ConId, "al", {"id_alumno"}),
+    Fecha = Table.AddColumn(Expandir, "fecha_alta", each DateTime.Date([marca]), type date),
+    Columnas = Table.SelectColumns(Fecha, {"id_alumno", "id_grupo", "fecha_alta", "financiado"}),
+    Ordenar = Table.Sort(Columnas, {{"fecha_alta", Order.Ascending}, {"id_alumno", Order.Ascending}})
+in
+    Ordenar

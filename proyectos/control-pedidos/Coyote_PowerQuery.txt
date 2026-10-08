@@ -1,0 +1,127 @@
+// ============================================================
+// Coyote Store · Control de pedidos e incidencias
+// Consultas de Power Query (lenguaje M)
+//
+// Origen: Coyote_registro_original.xlsx (hojas Clientes, Pedidos, Incidencias)
+// Cómo usarlas en Excel:
+//   Datos > Obtener datos > De otras fuentes > Consulta en blanco > Editor avanzado
+//   Crear una consulta por bloque con el nombre que aparece en su cabecera.
+//   Después de crear RutaOrigen, cambiar la ruta por la del archivo en tu equipo.
+// ============================================================
+
+
+// ---------- RutaOrigen (parámetro) ----------
+"C:\Coyote\Coyote_registro_original.xlsx" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+
+
+// ---------- fxFecha (función) ----------
+// Convierte a fecha lo que venga: fecha de Excel, texto dd/mm/aaaa o dd-mm-aaaa.
+// Si la celda está vacía devuelve null (no se inventa ninguna fecha).
+(valor as any) as nullable date =>
+let
+    resultado =
+        if valor = null or valor = "" then null
+        else if Value.Is(valor, type date) then valor
+        else if Value.Is(valor, type datetime) then DateTime.Date(valor)
+        else Date.FromText(Text.Replace(Text.Trim(Text.From(valor)), "-", "/"), "es-ES")
+in
+    resultado
+
+
+// ---------- fxImporte (función) ----------
+// Acepta números o textos como "1.249,00 €".
+(valor as any) as nullable number =>
+let
+    resultado =
+        if valor = null or valor = "" then null
+        else if Value.Is(valor, type number) then valor
+        else Number.FromText(Text.Trim(Text.Remove(Text.From(valor), {"€"})), "es-ES")
+in
+    resultado
+
+
+// ---------- Clientes ----------
+let
+    Origen = Excel.Workbook(File.Contents(RutaOrigen), null, true),
+    Hoja = Origen{[Item = "Clientes", Kind = "Sheet"]}[Data],
+    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars = true]),
+    SinVacias = Table.SelectRows(Encabezados, each [id_cliente] <> null and Text.Trim(Text.From([id_cliente])) <> ""),
+    Recortar = Table.TransformColumns(SinVacias, {
+        {"id_cliente", each Text.Upper(Text.Trim(Text.From(_))), type text},
+        {"nombre", each Text.Combine(List.Select(Text.Split(Text.Trim(Text.Clean(_)), " "), each _ <> ""), " "), type text},
+        {"tipo_cliente", each Text.Trim(_), type text},
+        {"localidad", each Text.Trim(_), type text}}),
+    // nombres escritos todo en minúscula: primera letra en mayúscula
+    NombreMayus = Table.TransformColumns(Recortar, {{"nombre", each if _ = Text.Lower(_) then Text.Proper(_) else _, type text}}),
+    // el mismo canal escrito de varias formas
+    Canal = Table.TransformColumns(NombreMayus, {{"canal_contacto", each
+        let t = Text.Lower(Text.Trim(_)) in
+            if t = "whatsapp" then "WhatsApp"
+            else if t = "instagram" then "Instagram"
+            else if t = "teléfono" or t = "telefono" then "Teléfono"
+            else if t = "tienda" then "Tienda"
+            else if t = "correo" or t = "email" then "Correo"
+            else "Revisar", type text}}),
+    SinDuplicados = Table.Distinct(Canal, {"id_cliente"})
+in
+    SinDuplicados
+
+
+// ---------- Pedidos ----------
+let
+    Origen = Excel.Workbook(File.Contents(RutaOrigen), null, true),
+    Hoja = Origen{[Item = "Pedidos", Kind = "Sheet"]}[Data],
+    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars = true]),
+    SinVacias = Table.SelectRows(Encabezados, each [id_pedido] <> null and Text.Trim(Text.From([id_pedido])) <> ""),
+    // códigos: sin espacios y en mayúscula (p-0439 -> P-0439)
+    Codigos = Table.TransformColumns(SinVacias, {
+        {"id_pedido", each Text.Upper(Text.Trim(Text.From(_))), type text},
+        {"id_cliente", each Text.Upper(Text.Trim(Text.From(_))), type text},
+        {"tipo", each Text.Trim(_), type text},
+        {"descripcion", each Text.Trim(_), type text}}),
+    Fechas = Table.TransformColumns(Codigos, {
+        {"fecha_pedido", fxFecha, type date},
+        {"fecha_prevista", fxFecha, type date},
+        {"fecha_entrega", fxFecha, type date}}),
+    Importes = Table.TransformColumns(Fechas, {
+        {"importe", fxImporte, type number},
+        {"anticipo", each if _ = null then 0 else fxImporte(_), type number}}),
+    // un único nombre para cada estado
+    Estado = Table.TransformColumns(Importes, {{"estado", each
+        let t = Text.Lower(Text.Trim(Text.Replace(Text.From(_), ".", ""))) in
+            if t = "entregado" then "Entregado"
+            else if t = "anulado" then "Anulado"
+            else if t = "pendiente" then "Pendiente"
+            else if t = "en taller" then "En taller"
+            else if t = "esperando pieza" or t = "esp pieza" then "Esperando pieza"
+            else if t = "listo para recoger" or t = "listo p/ recoger" then "Listo para recoger"
+            else "Revisar", type text}}),
+    // el mismo pedido apuntado dos veces: se queda la primera fila
+    SinDuplicados = Table.Distinct(Table.Buffer(Estado), {"id_pedido"}),
+    Tipos = Table.TransformColumnTypes(SinDuplicados, {{"importe", Currency.Type}, {"anticipo", Currency.Type}})
+in
+    Tipos
+
+
+// ---------- Incidencias ----------
+let
+    Origen = Excel.Workbook(File.Contents(RutaOrigen), null, true),
+    Hoja = Origen{[Item = "Incidencias", Kind = "Sheet"]}[Data],
+    Encabezados = Table.PromoteHeaders(Hoja, [PromoteAllScalars = true]),
+    SinVacias = Table.SelectRows(Encabezados, each [id_incidencia] <> null),
+    Codigos = Table.TransformColumns(SinVacias, {
+        {"id_incidencia", each Text.Upper(Text.Trim(Text.From(_))), type text},
+        {"id_pedido", each Text.Upper(Text.Trim(Text.From(_))), type text},
+        {"responsable", each Text.Trim(_), type text},
+        {"nota", each Text.Trim(_), type text}}),
+    Fechas = Table.TransformColumns(Codigos, {
+        {"fecha_apertura", fxFecha, type date},
+        {"fecha_cierre", fxFecha, type date}}),
+    Tipo = Table.TransformColumns(Fechas, {{"tipo", each
+        let t = Text.Lower(Text.Trim(_)) in
+            if t = "retraso proveedor" or t = "retraso de proveedor" then "Retraso de proveedor"
+            else Text.Upper(Text.Start(Text.Trim(_), 1)) & Text.Lower(Text.Middle(Text.Trim(_), 1)), type text}}),
+    Estado = Table.TransformColumns(Tipo, {{"estado", each Text.Proper(Text.Trim(_)), type text}}),
+    SinDuplicados = Table.Distinct(Estado, {"id_incidencia"})
+in
+    SinDuplicados
