@@ -135,7 +135,7 @@
       <p class="detalle" data-i18n="bio4">El sello ロサ que aparece junto a mi foto es mi nombre escrito en japonés. Me interesa mucho la cultura japonesa, sobre todo su forma de cuidar los detalles.</p>
     </div>
     <div class="rasgos">
-      <p class="rasgos-tit" data-i18n="ra-t">Cómo soy trabajando <small data-i18n="ra-s">(pasa el ratón o toca una tarjeta)</small></p>
+      <p class="rasgos-tit"><span data-i18n="ra-t">Cómo soy trabajando</span> <small data-i18n="ra-s">Toca una tarjeta para darle la vuelta</small></p>
       <button class="rasgo" type="button"><span class="cara-a"><b data-i18n="r1">Trabajo en equipo</b><i>01</i></span><span class="cara-b" data-i18n="r1b">Crecí con tres hermanas. Repartir tareas, ceder y ponerse de acuerdo lo aprendí mucho antes que en cualquier empresa.</span></button>
       <button class="rasgo" type="button"><span class="cara-a"><b data-i18n="r2">Me gustan los retos</b><i>02</i></span><span class="cara-b" data-i18n="r2b">En mi último proyecto creé un bot de Telegram desde cero y lo conecté con IA y Power BI. Si algo no sé hacerlo, lo aprendo.</span></button>
       <button class="rasgo" type="button"><span class="cara-a"><b data-i18n="r3">Siempre aprendiendo</b><i>03</i></span><span class="cara-b" data-i18n="r3b">Terminé el grado en 2024, el máster en 2026 y sigo con Python y SQL. Lo que aprendo lo pruebo enseguida en un proyecto.</span></button>
@@ -179,9 +179,9 @@
 <section class="proyectos" id="proyectos">
   <svg class="ola" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path id="ola" d="M0 60 C240 20 480 100 720 60 C960 20 1200 100 1440 60 L1440 120 L0 120 Z"/></svg>
   <div class="proy-cab">
-    <p class="etiqueta clara" data-i18n="p-et">Proyectos</p>
+    <p class="etiqueta clara" data-i18n="p-et">Proyectos destacados</p>
     <h2 data-i18n="p-tit">Problemas reales de negocio, resueltos con herramientas que una pyme ya tiene.</h2>
-    <p class="aviso-datos" data-i18n="p-av">Cuatro usan datos de ejemplo y uno datos públicos del INE. Ninguno está implantado en las empresas que aparecen.</p>
+    <p class="aviso-datos" data-i18n="p-av">Estos son mis cinco proyectos más destacados, los que mejor enseñan cómo trabajo. Cuatro usan datos de ejemplo y uno datos públicos del INE, y ninguno está implantado en las empresas que aparecen.</p>
   </div>
 
   <!-- 1 Asistente comercial -->
@@ -358,21 +358,31 @@
 <section class="trayectoria" id="trayectoria">
   <p class="etiqueta" data-i18n="tr-et">Trayectoria</p>
   <h2 data-i18n="tr-t">De la administración a los datos</h2>
-  <div class="linea-t" id="linea-t">
-    <span class="eje"><b id="eje"></b></span>
-    <div class="hito"><p class="fecha" data-i18n="h1f">Sep. 2024 – Sep. 2026</p><h3 data-i18n="h1t">Gestión comercial y administrativa</h3><p class="lugar" data-i18n="h1l">Coyote Store, Santa Marta, en remoto desde 2025</p><p data-i18n="h1x">Pedidos, reparaciones y encargos de principio a fin, cobros pendientes, incidencias con proveedores, cuadre de caja e informes de ventas.</p></div>
-    <div class="hito est"><p class="fecha">2026</p><h3 data-i18n="h2t">Máster en Gestión y Tecnologías de Procesos de Negocio</h3><p class="lugar" data-i18n="h2l">Universidad de Granada</p></div>
-    <div class="hito"><p class="fecha" data-i18n="h3f">Ene. 2022 – Jul. 2024</p><h3 data-i18n="h3t">Auxiliar administrativa</h3><p class="lugar" data-i18n="h3l">Escuela de Patronaje y Confección NR, Santa Marta</p><p data-i18n="h3x">Horarios, organización de grupos y actividades, registros administrativos en Excel y mejoras en el plan de estudios.</p></div>
-    <div class="hito est"><p class="fecha">2024</p><h3 data-i18n="h4t">Grado en Administración de Empresas</h3><p class="lugar" data-i18n="h4l">Universidad del Magdalena, Colombia</p></div>
-  </div>
-  <div class="cursos">
-    <h3 data-i18n="cu-t">Cursos en Udemy</h3>
-    <ul>
-      <li><span class="estado vivo" data-i18n="encurso">En curso</span>Python para Data Science &amp; Machine Learning</li>
-      <li><span class="estado vivo" data-i18n="encurso">En curso</span>SQL TOTAL</li>
-      <li><span class="estado" data-i18n="hecho">Hecho</span><span data-i18n="cu3">Administración de Operaciones, Análisis de Procesos</span></li>
-      <li><span class="estado" data-i18n="hecho">Hecho</span><span data-i18n="cu4">Contabilidad Administrativa, Costeo Basado en Actividades</span></li>
-    </ul>
+  <div class="tray-grid">
+    <div class="col-t">
+      <h3 class="col-tit" data-i18n="tr-ex">Experiencia</h3>
+      <div class="linea-t">
+        <span class="eje"><b></b></span>
+        <div class="hito"><p class="fecha" data-i18n="h1f">Sep. 2024 – Sep. 2026</p><h3 data-i18n="h1t">Gestión comercial y administrativa</h3><p class="lugar" data-i18n="h1l">Coyote Store, Santa Marta, en remoto desde 2025</p><p data-i18n="h1x">Pedidos, reparaciones y encargos de principio a fin, cobros pendientes, incidencias con proveedores, cuadre de caja e informes de ventas.</p></div>
+        <div class="hito"><p class="fecha" data-i18n="h3f">Ene. 2022 – Jul. 2024</p><h3 data-i18n="h3t">Auxiliar administrativa</h3><p class="lugar" data-i18n="h3l">Escuela de Patronaje y Confección NR, Santa Marta</p><p data-i18n="h3x">Horarios, organización de grupos y actividades, registros administrativos en Excel y mejoras en el plan de estudios.</p></div>
+      </div>
+    </div>
+    <div class="col-t">
+      <h3 class="col-tit" data-i18n="tr-fo">Formación</h3>
+      <div class="linea-t">
+        <span class="eje"><b></b></span>
+        <div class="hito est"><p class="fecha" data-i18n="h5f">2026 – actualidad</p><h3 data-i18n="cu-t">Cursos en Udemy</h3>
+          <ul class="cursos-l">
+            <li><span class="estado vivo" data-i18n="encurso">En curso</span>Python para Data Science &amp; Machine Learning</li>
+            <li><span class="estado vivo" data-i18n="encurso">En curso</span>SQL TOTAL</li>
+            <li><span class="estado" data-i18n="hecho">Hecho</span><span data-i18n="cu3">Administración de Operaciones, Análisis de Procesos</span></li>
+            <li><span class="estado" data-i18n="hecho">Hecho</span><span data-i18n="cu4">Contabilidad Administrativa, Costeo Basado en Actividades</span></li>
+          </ul>
+        </div>
+        <div class="hito est"><p class="fecha">2026</p><h3 data-i18n="h2t">Máster en Gestión y Tecnologías de Procesos de Negocio</h3><p class="lugar" data-i18n="h2l">Universidad de Granada</p></div>
+        <div class="hito est"><p class="fecha">2024</p><h3 data-i18n="h4t">Grado en Administración de Empresas</h3><p class="lugar" data-i18n="h4l">Universidad del Magdalena, Colombia</p></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -380,10 +390,10 @@
   <div class="cv-texto">
     <p class="etiqueta" data-i18n="cv-et">CV</p>
     <h2 data-i18n="cv-t">Todo esto, en una página</h2>
-    <p data-i18n="cv-p">Formato sencillo, listo para imprimir o adjuntar en una candidatura.</p>
+    <p data-i18n="cv-p">Si crees que puedo encajar en tu equipo, descárgalo y escríbeme. Me encantará contarte más sobre cualquiera de estos proyectos.</p>
     <div class="acciones izq">
-      <a class="boton lleno" href="cv/CV_Rosa_Isela_Rodriguez_Ruiz.pdf" download data-i18n="cv-b1">Descargar en PDF</a>
-      <a class="boton" href="cv/CV_Rosa_Isela_Rodriguez_Ruiz.pdf" target="_blank" data-i18n="cv-b2">Verlo en el navegador</a>
+      <a class="boton lleno" href="cv/CV_Rosa_Isela_Rodriguez_Ruiz.pdf" download data-i18n="cv-b1">Descargar mi CV</a>
+      <a class="boton" href="mailto:rosaiselar012@gmail.com" data-i18n="cv-b2">Escribirme</a>
     </div>
   </div>
   <a class="hoja inclina" href="cv/CV_Rosa_Isela_Rodriguez_Ruiz.pdf" target="_blank">

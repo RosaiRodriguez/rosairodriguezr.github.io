@@ -379,8 +379,8 @@ html[lang="en"] .idioma .en { color: var(--papel); }
 .cara-a b { font-family: var(--display); font-size: 22px; line-height: 1.1; }
 .cara-a i { font-style: normal; font-family: var(--display); font-weight: 700; font-size: 34px; color: var(--vino); opacity: .25; align-self: flex-end; }
 .cara-b { background: var(--vino); color: #fff; transform: rotateY(180deg); font-size: 15px; line-height: 1.5; display: flex; align-items: center; }
-.rasgo:hover .cara-a, .rasgo.girada .cara-a { transform: rotateY(-180deg); }
-.rasgo:hover .cara-b, .rasgo.girada .cara-b { transform: rotateY(0); }
+.rasgo.girada .cara-a { transform: rotateY(-180deg); }
+.rasgo.girada .cara-b { transform: rotateY(0); }
 
 /* ---------- Herramientas ---------- */
 .herramientas { max-width: var(--ancho); margin: 0 auto; padding: 60px 24px 160px; }
@@ -616,3 +616,67 @@ body { transition: background .5s ease, color .5s ease; }
 }
 .boton, .links-p a, .lista-herr button { white-space: nowrap; }
 @media (max-width: 700px) { .boton { padding: 14px 16px; font-size: 15px; } .acciones { gap: 10px; } }
+
+
+/* ===================== Versión 5 ===================== */
+/* Tarjetas que giran solo al pulsar: adelante y atrás */
+.rasgo { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.cara-a::after { content: "↻"; position: absolute; left: 20px; bottom: 16px; font-size: 18px; color: var(--vino); opacity: .7; }
+.cara-b::after { content: "↺"; position: absolute; right: 16px; bottom: 12px; font-size: 16px; opacity: .8; }
+@media (hover: hover) { .rasgo:hover .cara-a { border-color: var(--vino); } }
+
+/* Caja de herramientas: columnas siempre alineadas */
+.caja-herr { align-items: stretch; }
+.lista-herr { justify-content: space-between; }
+.lista-herr button { flex: 1; }
+.lista-herr button.activa, .lista-herr button:hover { transform: none; }
+.lista-herr button.activa { box-shadow: inset 4px 0 0 var(--vino); }
+.ficha-herr { min-height: 470px; align-items: center; }
+.ico-h { width: 38px; height: 38px; padding: 0; display: grid; place-items: center; }
+.ico-h img { width: 24px !important; height: 24px !important; object-fit: contain; }
+
+/* Trayectoria en dos columnas, ordenada por fecha */
+.tray-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+.col-tit { font-size: 24px; margin: 0 0 22px; display: flex; align-items: center; gap: 10px; }
+.col-tit::before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--vino); }
+.col-t:last-child .col-tit::before { border-radius: 2px; transform: rotate(45deg); }
+.linea-t { position: relative; padding-left: 40px; }
+.eje { left: 12px; width: 2px; top: 6px; bottom: 6px; }
+.hito { max-width: none; }
+.hito:hover { transform: none; }
+.hito::before { left: -35px; top: 28px; width: 16px; height: 16px; border-width: 2px; }
+.hito.est::before { border-radius: 3px; transform: rotate(45deg); }
+.cursos-l { list-style: none; margin: 10px 0 14px; padding: 0; display: grid; gap: 9px; }
+.cursos-l li { display: flex; align-items: baseline; gap: 10px; font-size: 15.5px; line-height: 1.45; }
+.cursos-l .estado { background: #EEE9E2; color: var(--suave); }
+:root[data-tema="oscuro"] .cursos-l .estado { background: rgba(255,255,255,.08); color: #C9CCD3; }
+.cursos-l .estado.vivo { background: #E9B9C4; color: #7A2338; }
+
+@media (max-width: 980px) {
+  .tray-grid { grid-template-columns: 1fr; gap: 40px; }
+  /* Herramientas en móvil y tablet: rejilla de botones y ficha debajo */
+  .lista-herr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; overflow: visible; padding: 0; }
+  .lista-herr button { flex-direction: column; justify-content: center; gap: 6px; padding: 12px 6px; font-size: 13px; text-align: center; white-space: normal; line-height: 1.2; min-height: 82px; }
+  .lista-herr button.activa { box-shadow: inset 0 -3px 0 var(--vino); }
+  .ficha-herr { min-height: 0; align-items: stretch; }
+}
+@media (max-width: 700px) {
+  .linea-t { padding-left: 40px; }
+  .eje { left: 12px; }
+  .hito::before { left: -35px; }
+  .hito { padding: 20px 18px 8px; }
+  .ficha-herr { padding: 18px; gap: 18px; }
+  .ficha-texto h3 { font-size: 26px; margin-bottom: 8px; }
+  .h-que { font-size: 16px; }
+  .h-uso { font-size: 15px; }
+  .h-proy a { font-size: 13px; padding: 6px 10px; }
+  .demo { min-height: 240px; }
+  .cursos-l li { flex-direction: column; gap: 3px; }
+}
+@media (max-width: 360px) {
+  .lista-herr button { font-size: 12px; min-height: 76px; }
+  .ico-h { width: 32px; height: 32px; }
+}
+.demo { padding-bottom: 38px; }
+.demo-pie { bottom: 10px; right: 16px; }
+:root .cursos-l .estado.vivo, :root[data-tema="oscuro"] .cursos-l .estado.vivo { background: #E9B9C4; color: #7A2338; }

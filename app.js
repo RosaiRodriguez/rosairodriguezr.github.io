@@ -15,8 +15,8 @@
     's-et': 'About me',
     's-rev': 'Before opening a spreadsheet I ask what decision those numbers need to support. I worked in administration at a sewing school and then at a shop, handling orders, payments and sales reports. Both places had the same problem, information scattered across chats and loose sheets, and people losing their mornings looking for it. That is where my projects come from.',
     d1: 'complete projects, each with a report and files', d2: 'nodes in my largest automation', d3: 'rows of official data cleaned and checked', d4: 'to answer an enquiry, at any time of day',
-    'p-et': 'Projects', 'p-tit': 'Real business problems, solved with tools a small company already has.',
-    'p-av': 'Four use sample data and one uses public data from Spain’s statistics office. None of them is in use at the businesses shown.',
+    'p-et': 'Featured projects', 'tr-ex': 'Experience', 'tr-fo': 'Education', h5f: '2026 – present', 'p-tit': 'Real business problems, solved with tools a small company already has.',
+    'p-av': 'These are my five most representative projects, the ones that best show how I work. Four use sample data and one uses public data from Spain’s statistics office, and none of them is in use at the businesses shown.',
     'bl-b1': 'Good morning. Today you should message <b>6 customers</b>.', 'bl-b2': 'Birthday on Friday', 'bl-b2b': 'Message written with AI',
     'bl-env': 'Sent', 'bl-com': 'Bought', 'bl-b4': 'Sale saved, €42.90', 'bl-g': 'Purchases by reason',
     'bl-m1': 'Birthday', 'bl-m2': 'New in', 'bl-m3': 'Stock', 'bl-m4': 'Win back', nodos: 'nodes',
@@ -50,14 +50,14 @@
     h4t: 'Degree in Business Administration', h4l: 'Universidad del Magdalena, Colombia',
     'cu-t': 'Udemy courses', encurso: 'In progress', hecho: 'Done',
     cu3: 'Operations Management, Process Analysis', cu4: 'Management Accounting, Activity-Based Costing',
-    'cv-et': 'CV', 'cv-t': 'All of this, on one page', 'cv-p': 'A simple format, ready to print or attach to an application. Written in Spanish.',
-    'cv-b1': 'Download PDF', 'cv-b2': 'Open in the browser',
+    'cv-et': 'CV', 'cv-t': 'All of this, on one page', 'cv-p': 'If you think I could fit in your team, download it and get in touch. I’d be glad to tell you more about any of these projects. The CV is in Spanish.',
+    'cv-b1': 'Download my CV', 'cv-b2': 'Email me',
     m6: 'Tools', i7: 'Tools',
     bio1: 'I have a degree in Business Administration from Universidad del Magdalena in Colombia and a Master\u2019s in Business Process Management and Technologies from the University of Granada, the city where I live.',
     bio2: 'I have never stopped studying because I like to understand how things work on the inside. Right now I am learning Python and SQL, to go further with the data I already know how to organise in Excel and Power BI.',
     bio3: 'I am looking for an administration, operations or sales support team where I can bring order and suggest improvements from day one.',
     bio4: 'The ロサ stamp next to my photo is my name written in Japanese. I am very interested in Japanese culture, especially the care it puts into details.',
-    'ra-t': 'How I work with others', 'ra-s': '(hover or tap a card)',
+    'ra-t': 'How I work with others', 'ra-s': 'Tap a card to flip it',
     r1: 'Teamwork', r1b: 'I grew up with three sisters. Sharing tasks, giving way and reaching agreements came long before any job.',
     r2: 'I like a challenge', r2b: 'In my latest project I built a Telegram bot from scratch and connected it to AI and Power BI. If I don\u2019t know how to do something, I learn it.',
     r3: 'Always learning', r3b: 'Degree in 2024, master\u2019s in 2026 and now Python and SQL. Whatever I learn, I try straight away in a project.',
@@ -197,8 +197,7 @@
     $('#hilo').style.width = (kp * 100) + '%';
     $$('.paso').forEach((p, i) => p.classList.toggle('on', kp > i / 4 + .05));
     // eje de la trayectoria
-    const lt = $('#linea-t').getBoundingClientRect(); const kt = Math.min(1, Math.max(0, (innerHeight * .6 - lt.top) / lt.height));
-    $('#eje').style.height = (kt * 100) + '%';
+    $$('.linea-t').forEach(l => { const lt = l.getBoundingClientRect(); const kt = Math.min(1, Math.max(0, (innerHeight * .6 - lt.top) / lt.height)); l.querySelector('.eje b').style.height = (kt * 100) + '%'; });
     $$('.hito').forEach(h => h.classList.toggle('on', h.getBoundingClientRect().top < innerHeight * .6));
     // ola
     const t = y * .004; $('#ola').setAttribute('d', `M0 60 C240 ${20 + Math.sin(t) * 25} 480 ${100 - Math.sin(t) * 25} 720 60 C960 ${20 + Math.cos(t) * 25} 1200 ${100 - Math.cos(t) * 25} 1440 60 L1440 120 L0 120 Z`);
@@ -241,7 +240,7 @@
   etiquetaTema();
 
   /* ---------- Tarjetas que giran (también al tocar) ---------- */
-  $$('.rasgo').forEach(r => r.addEventListener('click', () => r.classList.toggle('girada')));
+  $$('.rasgo').forEach(r => { r.setAttribute('aria-pressed', 'false'); r.addEventListener('click', () => { const g = r.classList.toggle('girada'); r.setAttribute('aria-pressed', g); }); });
 
   /* ---------- Caja de herramientas ---------- */
   const PROY = { bl: ['proy-bl', 'Asistente comercial', 'Sales assistant'], sol: ['proy-sol', 'Solicitudes automáticas', 'Automatic enquiries'], coy: ['proy-coy', 'Control de pedidos', 'Order tracking'], nr: ['proy-nr', 'Gestión académica', 'School admin'], nat: ['proy-nat', 'Natalidad en Granada', 'Births in Granada'] };
