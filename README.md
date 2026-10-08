@@ -21,4 +21,4 @@ Los cuatro primeros proyectos usan datos de ejemplo y no están implantados en l
 ## Contacto
 
 rosaiselar012@gmail.com
-https://www.linkedin.com/in/rosairodriguezr/
+https://www.linkedin.com/in/rosairodriguezr/    
